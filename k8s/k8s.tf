@@ -1,18 +1,18 @@
-resource "yandex_kubernetes_cluster" "zonal_cluster_resource_name" {
-  name        = "name"
+resource "yandex_kubernetes_cluster" "sky_famous_k8s_cluster" {
+  name        = "sky-famous-k8s-cluster"
   description = "description"
-
-  network_id = vpc_id
+  folder_id   = var.folder_id_sky_famous
+  network_id = var.vpc_id
 
   master {
-    version = "1.17"
+    version = "1.24"
     zonal {
-      zone      = availabilty_zone
+      zone      = var.zone_id
     }
 
     public_ip = true
 
-    security_group_ids = ["${yandex_vpc_security_group.security_group_name.id}"]
+    security_group_ids = [var.security_group_ids_sky_famous]
 
     maintenance_policy {
       auto_upgrade = true
@@ -23,28 +23,18 @@ resource "yandex_kubernetes_cluster" "zonal_cluster_resource_name" {
       }
     }
 
-    master_logging {
-      enabled = true
-      log_group_id = "${yandex_logging_group.log_group_resoruce_name.id}"
-      kube_apiserver_enabled = true
-      cluster_autoscaler_enabled = true
-      events_enabled = true
-      audit_enabled = true
-    }
+    
   }
 
-  service_account_id      = "${yandex_iam_service_account.service_account_resource_name.id}"
-  node_service_account_id = "${yandex_iam_service_account.node_service_account_resource_name.id}"
+  service_account_id      = var.sa
+  node_service_account_id = var.sa
 
   labels = {
-    my_key       = "my_value"
-    my_other_key = "my_other_value"
+    tags       = "sky-famous"
   }
 
   release_channel = "RAPID"
   network_policy_provider = "CALICO"
 
-  kms_provider {
-    key_id = "${yandex_kms_symmetric_key.kms_key_resource_name.id}"
-  }
+  
 }
