@@ -2,13 +2,12 @@ resource "yandex_kubernetes_cluster" "zonal_cluster_resource_name" {
   name        = "name"
   description = "description"
 
-  network_id = "${yandex_vpc_network.network_resource_name.id}"
+  network_id = vpc_id
 
   master {
     version = "1.17"
     zonal {
-      zone      = "${yandex_vpc_subnet.subnet_resource_name.zone}"
-      subnet_id = "${yandex_vpc_subnet.subnet_resource_name.id}"
+      zone      = availabilty_zone
     }
 
     public_ip = true
