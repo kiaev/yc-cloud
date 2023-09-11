@@ -38,3 +38,79 @@ resource "yandex_kubernetes_cluster" "sky_famous_k8s_cluster" {
 
   
 }
+
+resource "yandex_kubernetes_node_group" "sky_famous_node_group" {
+  cluster_id  = "${yandex_kubernetes_cluster.sky_famous_k8s_cluster.id}"
+  name        = "sky_famous_node_group"
+  description = "description"
+  version     = "1.24"
+
+  labels = {
+    "tags" = "sky-famous"
+  }
+
+  instance_template {
+    platform_id = "standard-v2"
+
+    network_interface {
+      nat                = true
+      subnet_ids         = ["${yandex_vpc_subnet.sky_famous_subnet_c.id}"]
+      security_group_ids = [var.security_group_ids_sky_famous]
+    }
+
+    resources {
+      memory = 4
+      cores  = 2
+    }
+
+    boot_disk {
+      type = "network-hdd"
+      size = 64
+    }
+
+    scheduling_policy {
+      preemptible = true
+    }
+
+    container_runtime {
+      type = "containerd"
+    }
+  }
+
+  scale_policy {
+    auto_scale  {
+      initial = 1
+      min = 1
+      max = 2
+    }
+  }
+
+  allocation_policy {
+    location {
+      zone = var.zone_id
+    }
+  }
+
+  maintenance_policy {
+    auto_upgrade = true
+    auto_repair  = true
+
+    maintenance_window {
+      day        = "monday"
+      start_time = "15:00"
+      duration   = "3h"
+    }
+
+    maintenance_window {
+      day        = "friday"
+      start_time = "10:00"
+      duration   = "4h30m"
+    }
+  }
+}
+
+resource "yandex_vpc_subnet" "sky_famous_subnet_c" {
+  v4_cidr_blocks = ["10.130.0.0/24"]
+  zone           = var.zone_id
+  network_id     = var.vpc_id
+}
