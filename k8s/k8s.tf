@@ -2,12 +2,12 @@ resource "yandex_kubernetes_cluster" "sky_famous_k8s_cluster" {
   name        = "sky-famous-k8s-cluster"
   description = "description"
   folder_id   = var.folder_id_sky_famous
-  network_id = var.vpc_id
+  network_id  = var.vpc_id
 
   master {
     version = "1.24"
     zonal {
-      zone      = var.zone_id
+      zone = var.zone_id
     }
 
     public_ip = true
@@ -23,25 +23,25 @@ resource "yandex_kubernetes_cluster" "sky_famous_k8s_cluster" {
       }
     }
 
-    
+
   }
 
   service_account_id      = var.sa
   node_service_account_id = var.sa
 
   labels = {
-    tags       = "sky-famous"
+    tags = "sky-famous"
   }
 
-  release_channel = "RAPID"
+  release_channel         = "RAPID"
   network_policy_provider = "CALICO"
 
-  
+
 }
 
 resource "yandex_kubernetes_node_group" "sky_famous_node_group" {
-  cluster_id  = "${yandex_kubernetes_cluster.sky_famous_k8s_cluster.id}"
-  name        = "sky_famous_node_group"
+  cluster_id  = yandex_kubernetes_cluster.sky_famous_k8s_cluster.id
+  name        = "sky-famous-node-group"
   description = "description"
   version     = "1.24"
 
@@ -75,13 +75,17 @@ resource "yandex_kubernetes_node_group" "sky_famous_node_group" {
     container_runtime {
       type = "containerd"
     }
+    
+    metadata = {
+      ssh-keys = var.ssh_key
+    }
   }
 
   scale_policy {
-    auto_scale  {
+    auto_scale {
       initial = 1
-      min = 1
-      max = 2
+      min     = 1
+      max     = 2
     }
   }
 
@@ -106,11 +110,13 @@ resource "yandex_kubernetes_node_group" "sky_famous_node_group" {
       start_time = "10:00"
       duration   = "4h30m"
     }
+
   }
 }
 
 resource "yandex_vpc_subnet" "sky_famous_subnet_c" {
-  v4_cidr_blocks = ["10.130.0.0/24"]
+  v4_cidr_blocks = ["10.130.10.0/26"]
   zone           = var.zone_id
   network_id     = var.vpc_id
+  folder_id      = var.folder_id_sky_famous
 }
