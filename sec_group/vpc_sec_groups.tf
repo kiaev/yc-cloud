@@ -2,6 +2,7 @@ resource "yandex_vpc_security_group" "yc_security_group" {
   name        = "yc-security-group"
   description = "description for Gitlab security group"
   network_id  = var.vpc_id
+  folder_id   = var.folder_id_sky_famous
 
   labels = {
     tags = "sky-famous"
@@ -48,7 +49,7 @@ resource "yandex_vpc_security_group" "yc_security_group" {
     v4_cidr_blocks = ["10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12"]
   }
 
-  ingress {
+  egress {
     protocol       = "Any"
     v4_cidr_blocks = ["0.0.0.0/0"]
     from_port      = 0
