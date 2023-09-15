@@ -75,7 +75,7 @@ resource "yandex_kubernetes_node_group" "sky_famous_node_group" {
     container_runtime {
       type = "containerd"
     }
-    
+
     metadata = {
       ssh-keys = var.ssh_key
     }
