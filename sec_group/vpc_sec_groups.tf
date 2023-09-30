@@ -56,3 +56,28 @@ resource "yandex_vpc_security_group" "yc_security_group" {
     to_port        = 65535
   }
 }
+
+resource "yandex_vpc_security_group" "yc_k8s_ansible" {
+  name        = "yc-k8s-ansible"
+  description = "description for K8S-Ansible security group"
+  network_id  = var.vpc_id
+  folder_id   = var.folder_id_sky_famous
+
+  labels = {
+    tags = "sky-famous"
+  }
+
+  ingress {
+    protocol          = "TCP"
+    description       = "Allow SSH protocol from anywhere"
+    port           = 22
+    v4_cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description    = "Permit ANY"
+    protocol       = "ANY"
+    v4_cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
