@@ -1,0 +1,8 @@
+vpc_id                        = "enp13gj0v3f3rfbo8abp"
+availabilty_zone              = "default-ru-central1-c"
+zone_id                       = "ru-central1-c"
+security_group_ids_sky_famous = "enpjct06joclgdddodif"
+sa                            = "ajes9i15l06im2ml9jg1"
+folder_id_sky_famous          = "b1g9t92cav07h8s3fsj3"
+subnet_id                     = "b0c8kga7ddpi36cjgnpm"
+ssh_key                       = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDYmbRV7hG96wF+l7K+J9oZDRVM3Ea6IB69F7GmFY1rKO8q7DqZP7pVqcByE1dDWBGEJ+rXfDzIpLO+cH9uy420+XQObTMtByOrumDLLi19Aogof70Iajp/kwR9yOKLrZd5JudO6N2kgI2xg7Wj0KfboFa1AKAQ4UDrSJViiSO4SS+gcPHp9x/ah5sgbiFk7V5AaCyXGSolGVm+lHaVyIleeSABFjzmZH8vumJyLLJP+Xm8XqyP064dmRHRZp3txVvjidPFArCxnZLOLPkZ4XycE3upb4ePwtvQ2tvVTyoho/+j7holBnb4qys62Sk2MCtwvmR9tJXMGGjkqTfdOSwH+IMp+nMrm+wDEpNGLA6myK3te/Y+W0dzMV361cymKweVPSQ3M9xOCNA3xxtlmpOpSQ0mpK/d4pHWO/23TzNEjuBhzgrj9whpW2XF1dRkx6VWISpc301tC/+yRDf9iEwQk4Q2/uWnyMZ4fvmHVVr2t+JwJucXCOz7UGBoRdPq2KU= rza@DESKTOP-27T72GQ"
